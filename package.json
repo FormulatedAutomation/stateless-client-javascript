@@ -1,0 +1,35 @@
+{
+	"name": "stateless-client",
+	"version": "0.1.0",
+	"description": "Javascript client for Stateless",
+	"main": "index.js",
+	"scripts": {
+		"coverage": "istanbul cover node_modules/tape/bin/tape tests/test.js && cat ./coverage/lcov.info | coveralls",
+		"docs": "documentation build */**.js -f html -o docs",
+		"istanbul": "istanbul cover node_modules/tape/bin/tape tests/test.js",
+		"test": "node ./tests/test.js"
+	},
+	"directories": {
+		"test": "tests"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/formulatedautomation/stateless-client-javascript.git"
+	},
+	"author": "Brent Sanders",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/formulatedautomation/stateless-client-javascript/issues"
+	},
+	"homepage": "https://github.com/formulatedautomation/stateless-client-javascript#readme",
+	"devDependencies": {
+		"coveralls": "^3.0.0",
+		"documentation": "^5.3.3",
+		"istanbul": "^0.4.5",
+		"moment": "^2.19.1",
+		"tape": "^4.8.0"
+	},
+	"dependencies": {
+		"node-fetch": "^2.6.0"
+	}
+}

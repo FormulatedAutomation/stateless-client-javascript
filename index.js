@@ -5,7 +5,7 @@ module.exports = class StatelessClient {
   constructor(projectKey, scope) {
     this.projectKey = projectKey;
     this.scope = scope;
-    this.apiUrl = "https://hidden-stream-66951.herokuapp.com";
+    this.apiUrl = "https://aion-dev.herokuapp.com";
     this.changeIds = [];
     this._data = null;
     this._getInitialData();

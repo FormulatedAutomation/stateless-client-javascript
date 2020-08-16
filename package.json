@@ -7,7 +7,7 @@
 		"coverage": "istanbul cover node_modules/tape/bin/tape tests/test.js && cat ./coverage/lcov.info | coveralls",
 		"docs": "documentation build */**.js -f html -o docs",
 		"istanbul": "istanbul cover node_modules/tape/bin/tape tests/test.js",
-		"test": "node ./tests/test.js"
+		"test": "NODE_ENV=test jest"
 	},
 	"directories": {
 		"test": "tests"
@@ -27,6 +27,7 @@
 		"documentation": "^5.3.3",
 		"istanbul": "^0.4.5",
 		"moment": "^2.19.1",
+		"jest": "^26.2.2",
 		"tape": "^4.8.0"
 	},
 	"dependencies": {

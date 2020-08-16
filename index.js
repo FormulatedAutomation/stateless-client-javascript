@@ -1,12 +1,12 @@
 'use strict'
-const fetch = require('node-fetch');
+const ApiClient = require('./api');
 
 module.exports = class StatelessClient {
   constructor(projectKey, scope) {
     this.projectKey = projectKey;
     this.scope = scope;
-    this.apiUrl = "https://aion-dev.herokuapp.com";
     this.changeIds = [];
+    this.api = new ApiClient();
     this._data = null;
     this._getInitialData();
   }
@@ -17,26 +17,12 @@ module.exports = class StatelessClient {
   }
 
   async setValue(key, value) {
-    const response = await fetch(`${this.apiUrl}/api/state/commit/${this._currentChangeId}/${this.scope}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(value)
-    });
-    const responseJson = await response.json();
-    if (responseJson['committed'] === undefined) {
-      throw "Change not committed, please check network!"
-    }
+    await this.api.updateValue(key, value);
     this._getInitialData()
   }
 
   async _getInitialData() {
-    const response = await fetch(`${this.apiUrl}/api/state/checkout/${this.projectKey}/${this.scope}`)
-    if (!response.ok) {
-      return null;
-    }
-    const responseJson = await response.json();
+    const responseJson = await this.api.getValue(this.projectKey, this.scope)
     const currentData = responseJson['state']['data'];
     this._setChangeId(responseJson['changeId']);
     this._setData(currentData)
@@ -56,6 +42,15 @@ module.exports = class StatelessClient {
 
   _setData(data) {
     this._data = data;
+  }
+
+  async _getChangeInfo(changeId) {
+    const response = await fetch(`${this.apiURL}/api/changes/${changeId}`);
+    if (!response.ok) {
+      throw "Could not connect to Stateless store"
+    }
+    const changeInfo = await response.json();
+    return changeInfo;
   }
 
 };
